@@ -12,7 +12,7 @@ var gulp = require('gulp'),
 	assetCache = require('gulp-asset-cache');
 
 gulp.task('images', function() {
-	return gulp.src('./images/*.{jpg,png,jpeg,gif,svg})
+	return gulp.src('./images/*.{jpg,png,jpeg,gif,svg'})
 		// Specify the location and name of the cache file
 		.pipe(assetCache('./images/.image-cache))
 		.pipe(imagemin({
