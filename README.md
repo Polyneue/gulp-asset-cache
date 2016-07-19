@@ -1,5 +1,4 @@
 #gulp-asset-cache
----
 [![Build Status](https://travis-ci.org/Polyneue/gulp-asset-cache.svg?branch=master)](https://travis-ci.org/Polyneue/gulp-asset-cache)
 [![Coverage Status](https://coveralls.io/repos/github/Polyneue/gulp-asset-cache/badge.svg?branch=master)](https://coveralls.io/github/Polyneue/gulp-asset-cache?branch=master)  
 
