@@ -4,7 +4,8 @@
   "description": "A disk based caching task for gulp",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --reporter spec"
+    "test": "mocha --reporter spec",
+    "cover": "node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec test/*"
   },
   "repository": {
     "type": "git",
@@ -23,7 +24,9 @@
   "homepage": "https://github.com/Polyneue/gulp-asset-cache#readme",
   "devDependencies": {
     "chai": "^3.5.0",
+    "coveralls": "^2.11.11",
     "gulp-util": "^3.0.7",
+    "istanbul": "^0.4.4",
     "mocha": "^2.5.3"
   },
   "dependencies": {

@@ -1,4 +1,4 @@
-##gulp-asset-cache
+#gulp-asset-cache
 A disk based caching task for [gulp](http://gulpjs.com/). This plugin was built mainly to deal with the issues around having no dist directory and wanting to prevent image/video compression from happening multiple times on larger teams. If you do have the luxury of a src/dist file structure I recommend [gulp-changed](https://www.npmjs.com/package/gulp-changed) or [gulp-newer](https://www.npmjs.com/package/gulp-newer) as they easily integrate with that file structure.
 
 ##Installation
