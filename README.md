@@ -6,7 +6,7 @@ Install package with NPM and add it to your development dependencies:
 `npm install --save-dev gulp-asset-cache`
 
 ##Usage
-```
+```javascript
 var gulp = require('gulp'),
 	imagemin = require('gulp-imagemin'),
 	assetCache = require('gulp-asset-cache');
@@ -26,7 +26,7 @@ This will create a cache file named `.image-cache` of all files passed through t
 
 ##Parameters
 ####`cacheName`
-```
+```javascript
 .pipe(assetCache( <cacheName> ))
 ```
 > [Optional] The location to store the cache-file.
