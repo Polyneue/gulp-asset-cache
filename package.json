@@ -1,0 +1,34 @@
+{
+  "name": "gulp-asset-cache",
+  "version": "1.0.0",
+  "description": "A disk based caching task for gulp",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Polyneue/gulp-asset-cache.git"
+  },
+  "keywords": [
+    "cache",
+    "gulp",
+    "gulpplugin"
+  ],
+  "author": "Ed Mendoza <polyneue@gmail.com> (http://www.edmendoza.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Polyneue/gulp-asset-cache/issues"
+  },
+  "homepage": "https://github.com/Polyneue/gulp-asset-cache#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "gulp-util": "^3.0.7",
+    "mocha": "^2.5.3"
+  },
+  "dependencies": {
+    "gulp-util": "^3.0.7",
+    "md5": "^2.1.0",
+    "through2": "^2.0.1"
+  }
+}
