@@ -14,73 +14,94 @@ var PluginError = gutil.PluginError,
 // Constants
 const PLUGIN_NAME = 'gulp-asset-cache';
 
-/**
- * Create a cache file for filtering
- * @param {string} cacheName - Path to cache file
- * @return stream
- */
-var assetCache = function(cacheName) {
-	var currentCache = {},
-		cacheFile = {};
+var assetCache = {
+	cacheFile: {},
+	currentCache: {},
+	cacheName: false,
 
-	// Set default cache if not specified
-	if (!cacheName) {
-		cacheName = './.asset-cache';
-	}
-	
-	// Try to load an existing cache file
-	try {
-		cacheFile = JSON.parse(fs.readFileSync(cacheName));
-	} catch (err) {
-		cacheFile = {};
-	}
+	filter: function(cacheName) {
 
-	/**
-	 * Update the cache and pass through uncached files
-	 * @param {File} file - A vinyl file
-	 * @param {enc} encoding - Encoding (ignored)
-	 * @param {function(err, file)} done - Callback
-	 */
-	function transform(file, enc, cb) {
-
-		if (file.isNull()) {
-			return cb();
+		// Set default cache if not specified
+		if (!cacheName) {
+			assetCache.cacheName = './.asset-cache';
+		} else {
+			assetCache.cacheName = cacheName;
+		}
+		
+		// Try to load an existing cache file
+		try {
+			assetCache.cacheFile = JSON.parse(fs.readFileSync(cacheName));
+		} catch (err) {
+			assetCache.cacheFile = {};
 		}
 
-		if (file.isStream()) {
-			throw new PluginError(PLUGIN_NAME, 'Streams not currently supported.');
-		}
+		/**
+		 * Update the current cache and filter out cached files
+		 * @param {File} file - A vinyl file
+		 * @param {enc} encoding - Encoding (ignored)
+		 * @param {function(err, file)} done - Callback
+		 */
+		 return through.obj(function(file, enc, cb) {
 
-		if (file.isBuffer()) {
-			var relativePath = path.relative(__dirname, path.dirname(file.path)) + '/' + path.basename(file.path),
-				hash = md5(relativePath);
-			
-			// Update cache object
-			currentCache[relativePath] = hash;
-
-			if (cacheFile[relativePath] === currentCache[relativePath]) {
-				// Skip cached file
-				gutil.log(PLUGIN_NAME + ':' + gc.green(' ✔ ') + relativePath + gc.grey(' (cached)'));
-				return cb();
-			} else {
-				// Push uncached file
-				gutil.log(PLUGIN_NAME + ':' + gc.red(' ✖ ') + relativePath + gc.grey(' (uncached)'));
-				this.push(file);
+			if (file.isNull()) {
 				return cb();
 			}
+
+			if (file.isStream()) {
+				throw new PluginError(PLUGIN_NAME, 'Streams not currently supported.');
+			}
+
+			if (file.isBuffer()) {
+				var relativePath = path.relative(process.cwd(), path.dirname(file.path)) + '/' + path.basename(file.path),
+					hash = md5(relativePath + file.stat['size']);
+
+				// Update cache object
+				assetCache.currentCache[relativePath] = hash;
+
+				if (assetCache.cacheFile[relativePath] === assetCache.currentCache[relativePath]) {
+					// Skip cached file
+					gutil.log(PLUGIN_NAME + ':' + gc.green(' ✔ ') + relativePath + gc.grey(' (cached)'));
+					return cb();
+				} else {
+					// Push uncached file
+					gutil.log(PLUGIN_NAME + ':' + gc.red(' ✖ ') + relativePath + gc.grey(' (uncached)'));
+					this.push(file);
+					return cb();
+				}
+			}
+		});
+	},
+
+	cache: function() {
+
+		/**
+		 * Update the current with changed files
+		 * @param {File} file - A vinyl file
+		 * @param {enc} encoding - Encoding (ignored)
+		 * @param {function(err, file)} done - Callback
+		 */
+		function transform(file, enc, cb) {
+			var relativePath = path.relative(process.cwd(), path.dirname(file.path)) + '/' + path.basename(file.path),
+				hash = md5(relativePath + fs.lstatSync(file.path));
+			
+			fs.stat(file.path, function(err, stats) {
+				// Update Cache
+				var hash = md5(relativePath + stats.size);
+				assetCache.currentCache[relativePath] = hash;
+				return cb();
+			});		
 		}
-	}
 
-	/**
-	 * Flush updated cache file to disk
-	 * @param {function(err, file)} done - Callback
-	 */
-	function flush(cb) {
-		fs.writeFile(cacheName, JSON.stringify(currentCache), cb);
-	}
+		/**
+		 * Flush updated cache file to disk
+		 * @param {function(err, file)} done - Callback
+		 */
+		function flush(cb) {
+			fs.writeFile(assetCache.cacheName, JSON.stringify(assetCache.currentCache, null, 4), cb);
+		}
 
-	// Return stream
-	return through.obj(transform, flush);
+		return through.obj(transform, flush);
+	}
 }
 
 // Exports
