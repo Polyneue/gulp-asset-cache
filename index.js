@@ -81,13 +81,15 @@ var assetCache = {
 		 * @param {function(err, file)} done - Callback
 		 */
 		function transform(file, enc, cb) {
-			var relativePath = path.relative(process.cwd(), path.dirname(file.path)) + '/' + path.basename(file.path),
+			var _this = this,
+				relativePath = path.relative(process.cwd(), path.dirname(file.path)) + '/' + path.basename(file.path),
 				hash = md5(relativePath + fs.lstatSync(file.path));
 			
 			fs.stat(file.path, function(err, stats) {
 				// Update Cache
 				var hash = md5(relativePath + stats.size);
 				assetCache.currentCache[relativePath] = hash;
+				_this.push(file);
 				return cb();
 			});		
 		}
