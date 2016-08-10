@@ -24,8 +24,8 @@ gulp.task('images', function() {
 		.pipe(imagemin({
 			verbose: true
 		}))
-		.pipe(assetCache.cache());
 		.pipe(gulp.dest('./images/'))
+		.pipe(assetCache.cache());
 });
 ```
 
