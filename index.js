@@ -30,7 +30,7 @@ var assetCache = {
 		
 		// Try to load an existing cache file
 		try {
-			assetCache.cacheFile = JSON.parse(fs.readFileSync(cacheName));
+			assetCache.cacheFile = JSON.parse(fs.readFileSync(assetCache.cacheName));
 		} catch (err) {
 			assetCache.cacheFile = {};
 		}
