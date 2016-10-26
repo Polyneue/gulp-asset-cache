@@ -14,10 +14,9 @@ describe('gulp-asset-cache', function() {
 
 	describe('without a cache file', function() {
 
-		/*
-		 * Test 1 - Create Default Cache
-		 * Default cache file should be created with the keys of foo.jpg and bar.jpg
-		 * Results - Test confirms that the default file is being written with new files being added
+		/**
+		 * Test 1 - Default cache file should be created with the keys of foo.jpg and bar.jpg
+		 * @results Test confirms that the default file is being written with new files being added
 		 */
 		it('Default file should be created with Foo and Bar', function(done) {
 
@@ -42,11 +41,9 @@ describe('gulp-asset-cache', function() {
 			stream.end();
 		});
 
-
-		/*
-		 * Test 2 - Create Cache File
-		 * Cache file should be created with the keys of foo.jpg, bar.jpg, and baz.jpg
-		 * Results - Test confirms that file is being written with new files being added
+		/**
+		 * Test 2 - Cache file should be created with the keys of foo.jpg, bar.jpg, and baz.jpg
+		 * @results Test confirms that file is being written with new files being added
 		 */
 		it('Foo, Bar, and Baz should show as uncached and be added to a specified cache file', function(done) {
 
@@ -87,10 +84,9 @@ describe('gulp-asset-cache', function() {
 			fs.writeFile('./test/.test-stored-cache', JSON.stringify({"test/fixtures/foo.jpg": "b432aa22f80486078aa53e6e5c64ddb3","test/fixtures/bar.jpg": "976c38a5095dc3dd31c85e2ca1fbbc50"}, null, 4), 'utf8');
 		});
 
-		/*
-		 * Test 2 - Update Cache
-		 * foo.jpg should be removed from the cache, and bar.jpg and baz.jpg should be added
-		 * Results - Test confirms that files are both being added and removed from the cache
+		/**
+		 * Test 2 - foo.jpg should be removed from the cache, and bar.jpg and baz.jpg should be added
+		 * @results Test confirms that files are both being added and removed from the cache
 		 */
 		it('Bar and Baz should show as uncached and be added to a stored cache file, Foo should be removed.', function(done) {
 
@@ -117,10 +113,9 @@ describe('gulp-asset-cache', function() {
 			stream.end();
 		});
 
-		/*
-		 * Test 3 - Recognize Cached Files
-		 * foo.jpg and bar.jpg should be recognized as cached while baz.jpg should be uncached
-		 * Results - Test confirms that files are being recognized properly when cached
+		/**
+		 * Test 3 - foo.jpg and bar.jpg should be recognized as cached while baz.jpg should be uncached
+		 * @results Test confirms that files are being recognized properly when cached
 		 */
 		 it('Foo and Bar should show as cached while Baz is uncached and added to the cache file.', function(done) {
 

@@ -8,11 +8,8 @@ var fs = require('fs'),
 	md5 = require('md5');
 
 // Helpers
-var PluginError = gutil.PluginError,
-	gc = gutil.colors;
-
-// Constants
-const PLUGIN_NAME = 'gulp-asset-cache';
+var gc = gutil.colors,
+	PLUGIN_NAME = 'gulp-asset-cache';
 
 var assetCache = {
 	cacheFile: {},
@@ -22,12 +19,8 @@ var assetCache = {
 	filter: function(cacheName) {
 
 		// Set default cache if not specified
-		if (!cacheName) {
-			assetCache.cacheName = './.asset-cache';
-		} else {
-			assetCache.cacheName = cacheName;
-		}
-		
+		assetCache.cacheName = cacheName ? cacheName : './.asset-cache';
+
 		// Try to load an existing cache file
 		try {
 			assetCache.cacheFile = JSON.parse(fs.readFileSync(assetCache.cacheName));
@@ -37,9 +30,9 @@ var assetCache = {
 
 		/**
 		 * Update the current cache and filter out cached files
-		 * @param {File} file - A vinyl file
-		 * @param {enc} encoding - Encoding (ignored)
-		 * @param {function(err, file)} done - Callback
+		 * @param {object} file - A vinyl file
+		 * @param {string} encoding - Encoding
+		 * @param {function} cb - Callback
 		 */
 		 return through.obj(function(file, enc, cb) {
 
@@ -48,7 +41,8 @@ var assetCache = {
 			}
 
 			if (file.isStream()) {
-				throw new PluginError(PLUGIN_NAME, 'Streams not currently supported.');
+				this.emit('error', new Error('Streaming not supported in gulp-asset-cache'));
+				return cb();
 			}
 
 			if (file.isBuffer()) {
@@ -57,6 +51,7 @@ var assetCache = {
 
 				// Update cache object
 				assetCache.currentCache[relativePath] = hash;
+
 
 				if (assetCache.cacheFile[relativePath] === assetCache.currentCache[relativePath]) {
 					// Skip cached file
@@ -76,9 +71,9 @@ var assetCache = {
 
 		/**
 		 * Update the current with changed files
-		 * @param {File} file - A vinyl file
-		 * @param {enc} encoding - Encoding (ignored)
-		 * @param {function(err, file)} done - Callback
+		 * @param {object} file - A vinyl file
+		 * @param {string} encoding - Encoding
+		 * @param {function} cb - Callback
 		 */
 		function transform(file, enc, cb) {
 			var _this = this,
@@ -96,7 +91,7 @@ var assetCache = {
 
 		/**
 		 * Flush updated cache file to disk
-		 * @param {function(err, file)} done - Callback
+		 * @param {function} cb - Callback
 		 */
 		function flush(cb) {
 			fs.writeFile(assetCache.cacheName, JSON.stringify(assetCache.currentCache, null, 4), cb);
