@@ -1,5 +1,11 @@
 # Change Log  
-All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).  
+> All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).  
+
+## [1.1.5] - 2017-11-05
+### Changed
+* Changed to using airbnb standards
+* Switched to Chalk over gutil module
+* README updates
 
 ## [1.1.4] - 2017-15-04
 ### Added
@@ -37,7 +43,8 @@ All notable changes to this project will be documented in this file. The format 
 ### Added  
 * Initial setup of README, Package, License and tests  
 
-[1.1.4]: https://github.com/Polyneue/gulp-asset-cache/compare/v1.1.3...HEAD
+[1.1.5]: https://github.com/Polyneue/gulp-asset-cache/compare/v1.1.4...HEAD
+[1.1.4]: https://github.com/Polyneue/gulp-asset-cache/compare/v1.1.3...v1.1.4
 [1.1.3]: https://github.com/Polyneue/gulp-asset-cache/compare/v1.1.2...v1.1.3
 [1.1.2]: https://github.com/Polyneue/gulp-asset-cache/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/Polyneue/gulp-asset-cache/compare/v1.1.0...v1.1.1
