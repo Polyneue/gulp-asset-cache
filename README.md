@@ -9,16 +9,16 @@ A disk based caching task for [gulp](http://gulpjs.com/). This plugin was built 
 Install package with NPM and add it to your development dependencies:  
 
 ```
-npm install --save gulp-asset-cache
+npm install gulp-asset-cache
 ```
 
 ## Example
 Below is a basic example of using the cache to manage image minification with the imagemin module.  
 
 ```javascript
-const gulp = require('gulp')
-const imagemin = require('gulp-imagemin')
-const assetCache = require('gulp-asset-cache')
+const gulp = require('gulp');
+const imagemin = require('gulp-imagemin');
+const assetCache = require('gulp-asset-cache');
 
 gulp.task('images', function() {
   return gulp.src('./images/*.{jpg,png,jpeg,gif,svg}')
@@ -28,30 +28,24 @@ gulp.task('images', function() {
       verbose: true
     }))
     .pipe(gulp.dest('./images/'))
-    .pipe(assetCache.cache())
-})
+    .pipe(assetCache.cache());
+});
 ```
 
 This will create a cache file named `.image-cache` of all files passed through the pipeline to be excluded from subsequent runs. If a file that has been cached is updated, the cache will recognize this and pass the file through to update it in the cache.  
 
 ## API  
 ### assetCache.filter(cacheName)  
-**cacheName**  (optional)  
-Type: `string`  
-Default: `./.asset-cache`  
-cacheName should be the name and location of where the cache file will live.  
+Generate a file that will contain all of the information related to the cache. If a file already exists, it will filter out the items within the cache from the stream.
+
+**Parameters:**  
+
+| Name | Type | Default Value | Description |
+| --- | --- | --- | --- |
+| cacheName | string | './.asset-cache' | The name and location of where the cache file will be saved. |
 
 ### assetCache.cache()  
 Create or update the currently streamed cache file.  
 
-## Tests  
-
-```
-npm test
-```
-
-
 ## License
-[The MIT License(MIT)](https://github.com/Polyneue/gulp-asset-cache/blob/master/LICENSE)  
-
-Copyright (c) 2016 [Ed Mendoza](http://www.edmendoza.com)
+MIT

@@ -4,7 +4,7 @@
   "description": "A disk based caching task for gulp",
   "main": "index.js",
   "scripts": {
-    "test": "standard && mocha --reporter spec",
+    "test": "mocha --reporter spec",
     "cover": "node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec test/*"
   },
   "repository": {
@@ -27,12 +27,15 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "coveralls": "^2.11.11",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.1.3",
+    "eslint-plugin-import": "^2.2.0",
+    "gulp-util": "^3.0.8",
     "istanbul": "^0.4.4",
-    "mocha": "^3.1.2",
-    "standard": "^10.0.2"
+    "mocha": "^3.1.2"
   },
   "dependencies": {
-    "gulp-util": "^3.0.7",
+    "chalk": "^1.1.3",
     "md5": "^2.1.0",
     "through2": "^2.0.1"
   }
