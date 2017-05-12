@@ -42,9 +42,7 @@ Generate a file that will contain all of the information related to the cache. I
 
 | Name | Type | Default Value | Description |
 | --- | --- | --- | --- |
-| cacheName | string | ./.asset-cache | The name and location of where the cache file will be saved. |
-
-<br/>
+| cacheName | string | './.asset-cache' | The name and location of where the cache file will be saved. |
 
 ### assetCache.cache()  
 Create or update the currently streamed cache file.  
